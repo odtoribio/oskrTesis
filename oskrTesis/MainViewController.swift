@@ -15,9 +15,7 @@ class MainViewController: UIViewController {
     
 //    @IBOutlet weak var textLabel: UILabel!
 //    
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
+    override func viewDidLoad() {
         
         FIRAuth.auth()?.addAuthStateDidChangeListener { auth, user in
             if let _ = user {
@@ -26,6 +24,11 @@ class MainViewController: UIViewController {
                 self.performSegueWithIdentifier("goSignIn", sender: self)
             }
         }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        
     }
     
     @IBAction func logOutUser(sender: UIButton) {
