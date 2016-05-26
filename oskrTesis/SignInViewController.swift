@@ -17,20 +17,24 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if (FIRAuth.auth()?.currentUser) != nil {
+            self.performSegueWithIdentifier("goToApp", sender: self)
+        }
         // Do any additional setup after loading the view.
     }
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        if (FIRAuth.auth()?.currentUser) != nil {
-            self.performSegueWithIdentifier("goToMainMenu", sender: self)
-        }
     }
     
     @IBAction func signInDidTouch(sender: UIButton) {
-        
-
+        FIRAuth.auth()?.signInWithEmail(email.text!, password: password.text!, completion: { (user, error) in
+            if user != nil{
+                self.performSegueWithIdentifier("goToApp", sender: self)
+            } else{
+                self.errorLabel.text = "Intentelo nuevamente"
+            }
+        })
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
